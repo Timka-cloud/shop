@@ -3,7 +3,7 @@ package kz.timka.shop.entities;
 
 import javax.persistence.*;
 @Entity
-@Table(name = "books")
+@Table(name = "students")
 public class Student {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
