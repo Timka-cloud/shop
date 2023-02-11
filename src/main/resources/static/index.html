@@ -15,7 +15,21 @@
 
 <body>
     <div class="container" ng-controller="indexController">
+        <p></p>
+        <form novalidate ng-submit="loadStudents()">
+            <div class="form-outline w-25">
+                <input class="form-control" type="number" placeholder="min score" ng-model="student.min">
+                <p></p>
+                <input class="form-control" type="number" placeholder="max score" ng-model="student.max">
+                <p></p>
+            </div>
+
+            <button type="submit" class="btn btn-primary">Поиск</button>
+        </form>
+        <p></p>
+
         <h3>Список студентов</h3>
+
         <table class="table table-hover">
             <tr>
                 <td>ID</td>
@@ -39,6 +53,26 @@
             </tbody>
 
         </table>
+
+        <p></p>
+        <h3>Добавить студента</h3>
+        <form novalidate ng-submit="createStudentJSON()">
+            <input class="form-control" type="text" placeholder="Имя" ng-model="newStudentJSON.name">
+            <p></p>
+            <input class="form-control" type="number" placeholder="Балл" ng-model="newStudentJSON.score">
+            <p></p>
+            <button type="submit" class="btn btn-primary">Сохранить JSON студента</button>
+        </form>
+
+        <p></p>
+        <h3>форма сложения</h3>
+        <form novalidate ng-submit="sumTwoNumbers()">
+            <input class="form-control" type="number" placeholder="a" ng-model="calcAdd.a">
+            <p></p>
+            <input class="form-control" type="number" placeholder="b" ng-model="calcAdd.b">
+            <p></p>
+            <button type="submit" class="btn btn-primary">Получить сумму</button>
+        </form>
 
     </div>
 </body>

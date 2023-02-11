@@ -19,8 +19,11 @@ public class StudentController {
     }
 
     @GetMapping("/students")
-    public List<Student> getAllStudents() {
-        return studentService.getAllStudents();
+    public List<Student> getAllStudents(
+            @RequestParam(name = "min_price",defaultValue = "0") Integer minPrice,
+            @RequestParam(name = "max_price", required = false) Integer maxPrice,
+            @RequestParam(name = "p", defaultValue = "1") Long page) {
+        return studentService.getAllWithFilterStudents(minPrice, maxPrice, page);
     }
 
     @GetMapping("/students/{id}")
@@ -33,14 +36,16 @@ public class StudentController {
         studentService.deleteById(id);
     }
 
-    @PostMapping("/students/save")
-    public void save(@RequestBody Student student) {
-        studentService.save(student);
+    @PostMapping("/students")
+    public Student save(@RequestBody Student student) {
+        return studentService.save(student);
     }
 
     @GetMapping("/students/change_score")
     public void changeScore(@RequestParam Long studentId, @RequestParam Integer delta) {
         studentService.changeScore(studentId, delta);
     }
+
+
 
 }

@@ -20,16 +20,17 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllStudents() {
-        return studentRepository.findAllOrdered();
+    public List<Student> getAllWithFilterStudents(Integer min, Integer max, Long page) {
+
+        return studentRepository.findAllStudentByScoreBetweenOrderById(min, max);
     }
 
     public void deleteById(Long id) {
         studentRepository.deleteById(id);
     }
 
-    public void save(Student student) {
-        studentRepository.save(student);
+    public Student save(Student student) {
+        return studentRepository.save(student);
     }
 
     public Optional<Student> findById(Long id) {
@@ -45,10 +46,4 @@ public class StudentService {
 
 
     }
-
-    
-
-
-
-
 }
