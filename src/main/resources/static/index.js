@@ -1,27 +1,26 @@
 angular.module('app', []).controller('indexController', function ($scope, $http) {
-    const contextPath = 'http://localhost:8189/shop';
-
-    $scope.student = {};
+    const contextPath = 'http://localhost:8189/shop/api/v1';
 
 
-    $scope.loadStudents = function () {
-        console.log($scope.student.min);
+
+    $scope.loadStudents = function (page = 1) {
         $http({
             url: contextPath + '/students',
             method: 'GET',
             params: {
-                min: $scope.student.min,
-                max: $scope.student.max
+                part_name: $scope.filter ? $scope.filter.part_name : null,
+                min_score: $scope.filter ? $scope.filter.min_score : null,
+                max_score: $scope.filter ? $scope.filter.max_score : null
             }
         }).then(function (response) {
-            $scope.StudentList = response.data;
+            $scope.StudentList = response.data.content;
             // $scope.student.min = null;
             // $scope.student.max = null;
         });
     }
 
     $scope.deleteStudent = function (studentId) {
-        $http.get(contextPath + '/students/delete/' + studentId)
+        $http.delete(contextPath + '/students/' + studentId)
             .then(function (response) {
                 $scope.loadStudents();
             })
@@ -49,19 +48,7 @@ angular.module('app', []).controller('indexController', function ($scope, $http)
             });
     }
 
-    $scope.sumTwoNumbers = function () {
-        $http({
-            url: contextPath + '/calc/add',
-            method: 'GET',
-            params: {
-                a: $scope.calcAdd.a,
-                b: $scope.calcAdd.b
-            }
-        }).then(function (response) {
-            alert('Сумма равна ' + response.data.value);
-            $scope.calcAdd = null;
-        });
-    }
+
 
 
 

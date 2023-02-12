@@ -15,6 +15,17 @@ public class Student {
     @Column(name = "score")
     private Integer score;
 
+    @Column(name = "secret_key")
+    private String secretKey;
+
+
+    public String getSecretKey() {
+        return secretKey;
+    }
+
+    public void setSecretKey(String secretKey) {
+        this.secretKey = secretKey;
+    }
 
     public Long getId() {
         return id;

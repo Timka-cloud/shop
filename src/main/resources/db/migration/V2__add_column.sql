@@ -1,0 +1,1 @@
+alter table students add column secret_key varchar(512);

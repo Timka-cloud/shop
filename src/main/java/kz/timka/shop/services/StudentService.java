@@ -3,7 +3,11 @@ package kz.timka.shop.services;
 import kz.timka.shop.entities.Student;
 import kz.timka.shop.exceptions.ResourceNotFoundException;
 import kz.timka.shop.repositories.StudentRepository;
+import kz.timka.shop.repositories.specification.StudentSpecification;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -20,9 +24,23 @@ public class StudentService {
         this.studentRepository = studentRepository;
     }
 
-    public List<Student> getAllWithFilterStudents(Integer min, Integer max, Long page) {
+    public Page<Student> find(Integer minScore, Integer maxScore, String partName, Integer page) {
+        Specification<Student> spec = Specification.where(null);
+        // select s from Student s where true
+        if(minScore != null) {
+            spec = spec.and(StudentSpecification.scoreGreaterOrEqualsThan(minScore));
+            // select s from Student s where true and s.score >= minScore
+        }
+        if(maxScore != null) {
+            spec = spec.and(StudentSpecification.scoreLessOrEqualsThan(maxScore));
+            // select s from Student s where true and s.score >= minScore and s.score <= maxScore
+        }
+        if(partName != null) {
+            spec = spec.and(StudentSpecification.nameLike(partName));
+            // select s from Student s where true and s.score >= minScore and s.score <= maxScore and s.name like %partName%
 
-        return studentRepository.findAllStudentByScoreBetweenOrderById(min, max);
+        }
+        return studentRepository.findAll(spec, PageRequest.of(page - 1, 5));
     }
 
     public void deleteById(Long id) {
